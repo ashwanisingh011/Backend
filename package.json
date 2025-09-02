@@ -1,11 +1,5 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "description": "In this I am going to learn Backend from Scratch.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Hitesh Sir",
-  "license": "ISC"
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  }
 }
