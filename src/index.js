@@ -2,9 +2,6 @@
 // import { DB_NAME } from './constant';
 // import express from 'express';
 
-import connectDB  from './db/index.js';
-import dotenv from 'dotenv'
-
 // First approach to connect to mongoDB
 /*
 (async ()=>{
@@ -26,13 +23,22 @@ import dotenv from 'dotenv'
 
 */
 
+import connectDB  from './db/index.js';
+import dotenv from 'dotenv'
+
 dotenv.config({
     path: './.env'
 });
 
-try {
-    await connectDB();
-} catch (error) {
-    console.error("ERROR: Failed to connect to MongoDB", error);
-    process.exit(1);
-}
+
+connectDB()
+.then(()=>{
+    app.listen(process.env.PORT || 8000, ()=>{
+        console.log(`App is running on port: ${process.env.PORT || 8000}`);
+    })
+
+})
+ .catch ((err) => {
+    console.log("Error in DB connection", err);
+})
+    
