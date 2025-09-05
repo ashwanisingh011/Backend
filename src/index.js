@@ -27,7 +27,12 @@ import dotenv from 'dotenv'
 */
 
 dotenv.config({
-    path: './env'
+    path: './.env'
 });
 
-connectDB(); 
+try {
+    await connectDB();
+} catch (error) {
+    console.error("ERROR: Failed to connect to MongoDB", error);
+    process.exit(1);
+}
