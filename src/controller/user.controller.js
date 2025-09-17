@@ -1,6 +1,6 @@
 import { ApiError } from "../utils/ApiError.js";
 import {asyncHandler} from "../utils/asyncHandler.js";
-import User from '../models/user.models.js'
+import {User} from '../models/user.models.js'
 import { uploadToCloudinary } from "../utils/cloudinary.js"
 import { ApiResponse } from "../utils/ApiResponse.js";
 
@@ -13,7 +13,7 @@ const registerUser = asyncHandler(async (req, res) => {
     ){
         throw new ApiError(400, "All fields are requried")
     }
-    const exitedUser = User.findOne({
+    const exitedUser = await User.findOne({
         $or: [{username}, {email}]
     })
     if(exitedUser){
@@ -24,14 +24,14 @@ const registerUser = asyncHandler(async (req, res) => {
    const coverImageLocalPath = req.files?.coverImage[0]?.path
 
     if(!avatarLocalPath){
-        throw new ApiError(400, "Avtar file is requried")
+        throw new ApiError(400, "Avatar file is requried")
     }
 
     const avatar = await uploadToCloudinary(avatarLocalPath);
     const coverImage =  await uploadToCloudinary(coverImageLocalPath);
 
     if(!avatar){
-        throw new ApiError(400, "Avtar file is requried")
+        throw new ApiError(400, "Avatar file is requried")
     }
 
     const user = User.create({
